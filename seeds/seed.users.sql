@@ -1,0 +1,22 @@
+INSERT INTO users (id, first_name, last_name, email, user_password)
+VALUES
+  (1, 'bill',
+    'bill', 'bill@email.com', '0123456'),
+  (2, 'ted',
+    'ted', 'ted@email.com', '1234567'),
+  (3, 'frank',
+    'frank', 'frank@email.com', '2345678'),
+  (4, 'john',
+    'john', 'john@email.com', '3456789'),
+  (5, 'chris',
+    'chris', 'chris@email.com', '4567891'),
+  (6, 'mark',
+    'mark', 'mark@email.com', '5678912'),
+  (7, 'kevin',
+    'kevin', 'kevin@email.com', '6789123'),
+  (8, 'luke',
+    'luke', 'luke@email.com', '7891234'),
+  (9, 'sam',
+    'sam', 'sam@email.com', '8912345'),
+  (10, 'cory',
+    'cory', 'cory@email.com', '9123456');
