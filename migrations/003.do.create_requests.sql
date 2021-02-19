@@ -3,7 +3,6 @@ CREATE TABLE requests (
   subject TEXT NOT NULL,
   message TEXT NOT NULL,
   date_sent TIMESTAMPTZ DEFAULT now() NOT NULL,
-  sender_id INTEGER REFERENCES users(id) NOT NULL,
-  receiver_id INTEGER REFERENCES users(id) NOT NULL,
-  item_id INTEGER REFERENCES items(id) NOT NULL
+  sender_id INTEGER REFERENCES users(id)  ON DELETE CASCADE NOT NULL,
+  item_id INTEGER REFERENCES items(id) ON DELETE CASCADE NOT NULL
 );
