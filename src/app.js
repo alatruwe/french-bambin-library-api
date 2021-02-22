@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
 const { CLIENT_ORIGIN } = require("./config");
 const homeRouter = require("./home/home-router");
+const loginRouter = require("./login/login-router");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 );
 
 app.use("/api/home", homeRouter);
+app.use("/api/login", loginRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");

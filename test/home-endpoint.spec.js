@@ -1,9 +1,12 @@
 const knex = require("knex");
 const app = require("../src/app");
-const { makeItemsArray, makeUsersArray } = require("./test-helpers");
+const helpers = require("./test-helpers");
 
 describe("Home Endpoint", function () {
   let db;
+
+  const testUsers = helpers.makeUsersArray();
+  const testItems = helpers.makeItemsArray();
 
   before("make knex instance", () => {
     db = knex({
@@ -26,16 +29,17 @@ describe("Home Endpoint", function () {
   describe(`GET /api/home`, () => {
     //test when database is empty
     context(`Given no items`, () => {
+      beforeEach(() => helpers.seedUsers(db, testUsers));
       it(`responds with 200 and an empty list`, () => {
-        return supertest(app).get("/api/home").expect(200, []);
+        return supertest(app)
+          .get("/api/home")
+          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+          .expect(200, []);
       });
     });
 
     // test when database has items
     context("Given there are items in the database", () => {
-      const testUsers = makeUsersArray();
-      const testItems = makeItemsArray();
-
       beforeEach("insert items", () => {
         return db
           .into("users")
@@ -46,7 +50,10 @@ describe("Home Endpoint", function () {
       });
 
       it("responds with 200 and all of the available items", () => {
-        return supertest(app).get("/api/home").expect(200, testItems);
+        return supertest(app)
+          .get("/api/home")
+          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+          .expect(200, testItems);
       });
     });
   });
