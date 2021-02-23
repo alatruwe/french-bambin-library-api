@@ -1,4 +1,6 @@
+const config = require("../config");
 const xss = require("xss");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
@@ -46,6 +48,14 @@ const SignupService = {
       last_name: xss(user.last_name),
       email: xss(user.email),
     };
+  },
+
+  createJwt(subject, payload) {
+    return jwt.sign(payload, config.JWT_SECRET, {
+      subject,
+      expiresIn: config.JWT_EXPIRY,
+      algorithm: "HS256",
+    });
   },
 };
 

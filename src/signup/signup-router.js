@@ -33,7 +33,11 @@ signupRouter.post("/", jsonBodyParser, (req, res, next) => {
 
           return SignupService.insertUser(req.app.get("db"), newUser).then(
             (user) => {
-              res.status(201).json(SignupService.serializeUser(user));
+              const sub = user.email;
+              const payload = { user_id: user.id };
+              res.send({
+                authToken: SignupService.createJwt(sub, payload),
+              });
             }
           );
         }
