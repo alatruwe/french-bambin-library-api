@@ -8,6 +8,7 @@ const { CLIENT_ORIGIN } = require("./config");
 const homeRouter = require("./home/home-router");
 const loginRouter = require("./login/login-router");
 const signupRouter = require("./signup/signup-router");
+const additemRouter = require("./add-item/add-item-router");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/api/home", homeRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/signup", signupRouter);
+app.use("/api/add-item", additemRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");
