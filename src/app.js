@@ -1,10 +1,11 @@
 require("dotenv").config();
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
-const { CLIENT_ORIGIN } = require("./config");
+const bodyParser = require("body-parser");
 const homeRouter = require("./home/home-router");
 const loginRouter = require("./login/login-router");
 const signupRouter = require("./signup/signup-router");
@@ -13,10 +14,18 @@ const additemRouter = require("./add-item/add-item-router");
 const app = express();
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("uploads"));
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
+
+// enable files upload
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
 
 app.use("/api/home", homeRouter);
 app.use("/api/login", loginRouter);
