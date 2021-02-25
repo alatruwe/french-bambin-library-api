@@ -59,7 +59,7 @@ function makeItemsArray() {
       image:
         "How-tohttps://images-na.ssl-images-amazon.com/images/I/51Griyx+2dL._SX437_BO1,204,203,200_.jpg",
       available: false,
-      user_id: 2,
+      user_id: 1,
     },
     {
       id: 3,
@@ -77,7 +77,52 @@ function makeItemsArray() {
       image:
         "How-tohttps://images-na.ssl-images-amazon.com/images/I/51Griyx+2dL._SX437_BO1,204,203,200_.jpg",
       available: true,
-      user_id: 5,
+      user_id: 1,
+    },
+  ];
+}
+
+function makeRequestsArray() {
+  return [
+    {
+      id: 1,
+      subject: "Hi",
+      message: "First email content!",
+      date_sent: new Date("2029-01-22T16:28:32.615Z"),
+      sender_id: 1,
+      item_id: 2,
+    },
+    {
+      id: 2,
+      subject: "Hi",
+      message: "First email content!",
+      date_sent: new Date("2029-01-22T16:28:32.615Z"),
+      sender_id: 2,
+      item_id: 1,
+    },
+    {
+      id: 3,
+      subject: "Hi",
+      message: "First email content!",
+      date_sent: new Date("2029-01-22T16:28:32.615Z"),
+      sender_id: 1,
+      item_id: 2,
+    },
+    {
+      id: 4,
+      subject: "Hi",
+      message: "First email content!",
+      date_sent: new Date("2029-01-22T16:28:32.615Z"),
+      sender_id: 1,
+      item_id: 2,
+    },
+    {
+      id: 5,
+      subject: "Hi",
+      message: "First email content!",
+      date_sent: new Date("2029-01-22T16:28:32.615Z"),
+      sender_id: 1,
+      item_id: 2,
     },
   ];
 }
@@ -94,6 +139,29 @@ function seedUsers(db, users) {
       // update the auto sequence to stay in sync
       db.raw(`SELECT setval('users_id_seq', ?)`, [users[users.length - 1].id])
     );
+}
+
+function seedItemsTables(db, users, items, requests = []) {
+  // use a transaction to group the queries and auto rollback on any failure
+  return db.transaction(async (trx) => {
+    await seedUsers(trx, users);
+    await trx.into("items").insert(items);
+    // update the auto sequence to match the forced id values
+    await trx.raw(`SELECT setval('items_id_seq', ?)`, [
+      items[items.length - 1].id,
+    ]);
+    // only insert comments if there are some, also update the sequence counter
+    if (requests.length) {
+      await trx.into("requests").insert(requests);
+      await trx.raw(`SELECT setval('requests_id_seq', ?)`, [
+        requests[requests.length - 1].id,
+      ]);
+    }
+  });
+}
+
+function seedRequests(db, requests) {
+  return db.insert(requests).into("requests").returning("*");
 }
 
 function makeLibraryFixtures() {
@@ -113,7 +181,10 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
 module.exports = {
   makeUsersArray,
   makeItemsArray,
+  makeRequestsArray,
   makeLibraryFixtures,
   makeAuthHeader,
   seedUsers,
+  seedItemsTables,
+  seedRequests,
 };
