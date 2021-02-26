@@ -21,12 +21,18 @@ itemhistoryRouter
   .all(requireAuth)
   .delete((req, res, next) => {
     const { item_id } = req.params;
+    ItemHistoryService.getItemById(req.app.get("db"), item_id).then((item) => {
+      if (!item)
+        return res.status(404).json({
+          error: { message: `Item doesn't exist` },
+        });
 
-    ItemHistoryService.deleteItem(req.app.get("db"), item_id)
-      .then(() => {
-        res.status(204).end();
-      })
-      .catch(next);
+      return ItemHistoryService.deleteItem(req.app.get("db"), item_id)
+        .then(() => {
+          res.status(204).end();
+        })
+        .catch(next);
+    });
   });
 
 module.exports = itemhistoryRouter;
