@@ -68,7 +68,7 @@ function makeItemsArray() {
       image:
         "How-tohttps://images-na.ssl-images-amazon.com/images/I/51Griyx+2dL._SX437_BO1,204,203,200_.jpg",
       available: true,
-      user_id: 1,
+      user_id: 2,
     },
     {
       id: 4,
@@ -77,7 +77,7 @@ function makeItemsArray() {
       image:
         "How-tohttps://images-na.ssl-images-amazon.com/images/I/51Griyx+2dL._SX437_BO1,204,203,200_.jpg",
       available: true,
-      user_id: 1,
+      user_id: 2,
     },
   ];
 }
@@ -170,6 +170,19 @@ function makeLibraryFixtures() {
   return { testUsers, testItems };
 }
 
+function makeExpectedItems(user, items) {
+  const expectedItems = items.filter((item) => {
+    return item.user_id === user.id;
+  });
+  return expectedItems.map((item) => {
+    return {
+      title: item.title,
+      image: item.image,
+      description: item.description,
+    };
+  });
+}
+
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.email,
@@ -183,6 +196,7 @@ module.exports = {
   makeItemsArray,
   makeRequestsArray,
   makeLibraryFixtures,
+  makeExpectedItems,
   makeAuthHeader,
   seedUsers,
   seedItemsTables,

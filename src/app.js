@@ -11,6 +11,7 @@ const loginRouter = require("./login/login-router");
 const signupRouter = require("./signup/signup-router");
 const additemRouter = require("./add-item/add-item-router");
 const sendrequestRouter = require("./send-request/send-request-router");
+const itemhistoryRouter = require("./item-history/item-history-router");
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/login", loginRouter);
 app.use("/api/signup", signupRouter);
 app.use("/api/add-item", additemRouter);
 app.use("/api/send-request", sendrequestRouter);
+app.use("/api/item-history", itemhistoryRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");
