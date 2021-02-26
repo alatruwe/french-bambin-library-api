@@ -79,8 +79,6 @@ describe("Signup Endpoints", function () {
           email: "test email",
           user_password: "*".repeat(73),
         };
-        // console.log(userLongPassword)
-        // console.log(userLongPassword.password.length)
         return supertest(app)
           .post("/api/signup")
           .send(userLongPassword)

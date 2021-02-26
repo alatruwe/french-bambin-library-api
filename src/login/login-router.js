@@ -14,13 +14,15 @@ loginRouter.post("/", jsonBodyParser, (req, res, next) => {
       return res.status(400).json({
         error: `Missing '${key}' in request body`,
       });
-
+  // get user by email from database
   LoginService.getUserWithEmail(req.app.get("db"), loginUser.email)
     .then((dbUser) => {
+      // check email
       if (!dbUser)
         return res.status(400).json({
           error: "Incorrect email or password",
         });
+      // check password
       return LoginService.comparePasswords(
         loginUser.user_password,
         dbUser.user_password
@@ -30,6 +32,7 @@ loginRouter.post("/", jsonBodyParser, (req, res, next) => {
             error: "Incorrect email or password",
           });
 
+        // create auth token
         const sub = dbUser.email;
         const payload = { user_id: dbUser.id };
         res.send({
@@ -40,6 +43,7 @@ loginRouter.post("/", jsonBodyParser, (req, res, next) => {
     .catch(next);
 });
 
+// refresh auth token
 loginRouter.post("/refresh", requireAuth, (req, res) => {
   const sub = req.user.email;
   const payload = { user_id: req.user.id };

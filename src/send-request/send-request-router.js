@@ -11,7 +11,7 @@ sendrequestRouter
     // ----- updating database -----
     // get info from request body
     const { subject, message, item_id } = req.body;
-    const newRequest = { subject, message };
+    const newRequest = { subject, message, item_id };
 
     // check if anything is missing
     for (const [key, value] of Object.entries(newRequest))
@@ -22,9 +22,10 @@ sendrequestRouter
 
     // get user_id fron jwt auth token
     newRequest.sender_id = req.user.id;
+    // set date
     newRequest.date_sent = new Date();
-    newRequest.item_id = item_id;
 
+    // update database
     SendRequestService.insertRequest(req.app.get("db"), newRequest)
       .then((request) => {
         res.status(201).send(request);
@@ -62,7 +63,6 @@ sendrequestRouter
           subject: req.body.subject,
           userMessage: req.body.message,
         };
-        console.log(newEmail);
 
         // send email
         SendRequestService.sendEmail(newEmail);

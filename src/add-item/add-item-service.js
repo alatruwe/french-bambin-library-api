@@ -1,5 +1,3 @@
-const xss = require("xss");
-
 const AddItemService = {
   insertItem(db, newItem) {
     return db

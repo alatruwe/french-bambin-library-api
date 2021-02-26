@@ -1,6 +1,4 @@
-const xss = require("xss");
 const nodemailer = require("nodemailer");
-const config = require("../config");
 
 const SendRequestService = {
   insertRequest(db, newRequest) {
@@ -28,7 +26,7 @@ const SendRequestService = {
     return db.from("users").select("email").where("id", user_id).first();
   },
 
-  // send email
+  // send email via Mailtrap for testing and debugging
   sendEmail(email) {
     const transporter = nodemailer.createTransport({
       host: "smtp.mailtrap.io",

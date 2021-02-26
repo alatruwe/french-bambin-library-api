@@ -57,6 +57,7 @@ describe("Item History Endpoint", function () {
     });
   });
 
+  // delete an item
   describe(`DELETE /api/item-history/item/:item_id`, () => {
     context(`Given no item`, () => {
       beforeEach(() => helpers.seedUsers(db, testUsers));

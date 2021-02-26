@@ -3,7 +3,7 @@ const app = require("../src/app");
 const helpers = require("./test-helpers");
 const fs = require("fs");
 
-describe.only("Add Item Endpoint", function () {
+describe("Add Item Endpoint", function () {
   let db;
 
   const testUsers = helpers.makeUsersArray();
@@ -28,6 +28,7 @@ describe.only("Add Item Endpoint", function () {
 
   describe(`POST /api/add-item`, () => {
     beforeEach(() => helpers.seedUsers(db, testUsers));
+
     it(`creates an item, responding with 201 and the new item`, function () {
       const newItem = {
         title: "Test new item title",

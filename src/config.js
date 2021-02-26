@@ -5,5 +5,5 @@ module.exports = {
     process.env.DB_URL ||
     "postgresql://adelinelatruwe@localhost/french-bambin-library",
   JWT_SECRET: process.env.JWT_SECRET || "change-this-secret",
-  JWT_EXPIRY: process.env.JWT_EXPIRY || "60s",
+  JWT_EXPIRY: process.env.JWT_EXPIRY || "120s",
 };

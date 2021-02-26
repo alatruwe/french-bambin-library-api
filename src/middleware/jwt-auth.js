@@ -17,7 +17,7 @@ function requireAuth(req, res, next) {
       .then((user) => {
         if (!user)
           return res.status(401).json({ error: "Unauthorized request" });
-
+        // make user object available to protected endpoints
         req.user = user;
         next();
       })

@@ -66,7 +66,7 @@ describe("Send Request Endpoints", function () {
         );
     });
 
-    it(`send an email, responding with 201`, function () {
+    it(`sends an email, responding with 201`, function () {
       const testItem = testItems[0];
       const testUser = testUsers[0];
       const newRequest = {
