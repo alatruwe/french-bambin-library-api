@@ -2,8 +2,9 @@ const knex = require("knex");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-describe("Users Endpoints", function () {
+describe("Signup Endpoints", function () {
   let db;
 
   const { testUsers } = helpers.makeLibraryFixtures();
@@ -147,24 +148,26 @@ describe("Users Endpoints", function () {
   });
 
   context(`Happy path`, () => {
-    it(`responds 201, serialized user, storing bcryped password`, () => {
+    it(`responds 201 and JWT auth token using secret when valid signup`, () => {
       const newUser = {
         first_name: "test first_name",
         last_name: "test last_name",
         email: "test email",
         user_password: "11AAaa!!",
       };
+      const expectedToken = jwt.sign(
+        { user_id: testUser.id },
+        process.env.JWT_SECRET,
+        {
+          subject: testUser.email,
+          expiresIn: process.env.JWT_EXPIRY,
+          algorithm: "HS256",
+        }
+      );
       return supertest(app)
         .post("/api/signup")
         .send(newUser)
         .expect(201)
-        .expect((res) => {
-          expect(res.body).to.have.property("id");
-          expect(res.body.email).to.eql(newUser.email);
-          expect(res.body.first_name).to.eql(newUser.first_name);
-          expect(res.body.last_name).to.eql(newUser.last_name);
-          expect(res.body).to.not.have.property("user_password");
-        })
         .expect((res) =>
           db
             .from("users")

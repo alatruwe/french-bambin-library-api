@@ -2,7 +2,7 @@ const knex = require("knex");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe.only("Item History Endpoint", function () {
+describe("Item History Endpoint", function () {
   let db;
 
   const testUsers = helpers.makeUsersArray();
@@ -26,7 +26,7 @@ describe.only("Item History Endpoint", function () {
     db.raw("TRUNCATE requests, items, users RESTART IDENTITY CASCADE")
   );
 
-  describe.skip(`GET /api/item-history`, () => {
+  describe(`GET /api/item-history`, () => {
     //test when database is empty
     context(`Given no items`, () => {
       beforeEach(() => helpers.seedUsers(db, testUsers));

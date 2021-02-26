@@ -2,7 +2,7 @@ const knex = require("knex");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe.only("Send Request Endpoints", function () {
+describe("Send Request Endpoints", function () {
   let db;
 
   const testUsers = helpers.makeUsersArray();

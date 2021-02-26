@@ -35,7 +35,11 @@ signupRouter.post("/", jsonBodyParser, (req, res, next) => {
             (user) => {
               const sub = user.email;
               const payload = { user_id: user.id };
-              res.send({
+              res.status(201).json({
+                id: user.id,
+                first_name,
+                last_name,
+                email,
                 authToken: SignupService.createJwt(sub, payload),
               });
             }

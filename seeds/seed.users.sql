@@ -1,7 +1,7 @@
 INSERT INTO users (id, first_name, last_name, email, user_password)
 VALUES
   (1, 'bill',
-    'bill', 'bill@email.com', '$2a$12$avM6.neqaEz6C14dLvDtg.PqT6.S9vrftN0r4cJpLQ1Zowhy.ZjoK'),
+    'bill', 'bill@email.com', '$2a$12$2UszUpVwqVHbyJz6U32eNuLiAU152h8cp/e4DWFimr2a0yPBEk5lO'),
   (2, 'ted',
     'ted', 'ted@email.com', '$2a$12$zkDUz4dAmtCpt4eNNukAz.lETUM2EYei2QEGJd6Gc2mqo/3SPHNyC'),
   (3, 'frank',

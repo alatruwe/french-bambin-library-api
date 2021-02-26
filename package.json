@@ -24,6 +24,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
+    "fs": "^0.0.1-security",
     "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.17",

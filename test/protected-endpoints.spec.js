@@ -1,4 +1,5 @@
 const knex = require("knex");
+const supertest = require("supertest");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
@@ -40,7 +41,26 @@ describe("Protected endpoints", function () {
       path: "/api/home",
       method: supertest(app).get,
     },
-    // add here more endpoints
+    {
+      name: "POST /api/send-request",
+      path: "/api/send-request",
+      method: supertest(app).post,
+    },
+    {
+      name: "GET /api/item-history",
+      path: "/api/item-history",
+      method: supertest(app).get,
+    },
+    {
+      name: "DELETE /api/item-history",
+      path: "/api/item-history",
+      method: supertest(app).delete,
+    },
+    {
+      name: "POST /api/add-item",
+      path: "/api/add-item",
+      method: supertest(app).post,
+    },
   ];
 
   protectedEndpoints.forEach((endpoint) => {
