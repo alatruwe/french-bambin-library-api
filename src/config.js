@@ -1,10 +1,10 @@
 module.exports = {
   PORT: process.env.PORT || 8000,
   NODE_ENV: process.env.NODE_ENV || "development",
-  DATABSE_URL:
+  DATABASE_URL:
     process.env.DATABASE_URL ||
     "postgresql://adelinelatruwe@localhost/french-bambin-library",
-  TEST_DATABSE_URL:
+  TEST_DATABASE_URL:
     process.env.DATABASE_URL ||
     "postgresql://adelinelatruwe@localhost/french-bambin-library-test",
   JWT_SECRET: process.env.JWT_SECRET || "change-this-secret",
