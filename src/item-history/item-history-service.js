@@ -2,7 +2,7 @@ const ItemHistoryService = {
   getItemHistory(db, user_id) {
     return db
       .from("items")
-      .select("title", "description", "image")
+      .select("title", "description", "image", "id")
       .where("user_id", user_id);
   },
 
