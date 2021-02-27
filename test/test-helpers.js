@@ -179,6 +179,7 @@ function makeExpectedItems(user, items) {
       title: item.title,
       image: item.image,
       description: item.description,
+      id: item.id,
     };
   });
 }
