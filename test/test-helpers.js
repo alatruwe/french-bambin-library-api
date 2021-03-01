@@ -47,8 +47,6 @@ function makeItemsArray() {
       id: 1,
       title: "Sami et Julie à la plage",
       description: "First item content!",
-      image:
-        "How-tohttps://images-na.ssl-images-amazon.com/images/I/51Griyx+2dL._SX437_BO1,204,203,200_.jpg",
       available: true,
       user_id: 1,
     },
@@ -56,8 +54,6 @@ function makeItemsArray() {
       id: 2,
       title: "Sami et Julie à la cantine",
       description: "Second item content!",
-      image:
-        "How-tohttps://images-na.ssl-images-amazon.com/images/I/51Griyx+2dL._SX437_BO1,204,203,200_.jpg",
       available: false,
       user_id: 1,
     },
@@ -65,8 +61,6 @@ function makeItemsArray() {
       id: 3,
       title: "Sami et Julie à la maison",
       description: "Third item content!",
-      image:
-        "How-tohttps://images-na.ssl-images-amazon.com/images/I/51Griyx+2dL._SX437_BO1,204,203,200_.jpg",
       available: true,
       user_id: 2,
     },
@@ -74,8 +68,6 @@ function makeItemsArray() {
       id: 4,
       title: "Sami et Julie à la l'ecole",
       description: "Fourth item content!",
-      image:
-        "How-tohttps://images-na.ssl-images-amazon.com/images/I/51Griyx+2dL._SX437_BO1,204,203,200_.jpg",
       available: true,
       user_id: 2,
     },
@@ -177,7 +169,6 @@ function makeExpectedItems(user, items) {
   return expectedItems.map((item) => {
     return {
       title: item.title,
-      image: item.image,
       description: item.description,
       id: item.id,
     };
