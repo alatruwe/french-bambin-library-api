@@ -1,26 +1,334 @@
-# Express Boilerplate!
+# French Bambin Library API
 
-This is a boilerplate project used for starting new projects!
+The french bambin library is a french books platform exchange. 
 
-## Set up
+It helps connect parents to find and share french learning materials.
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Install:
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+    npm install
 
-## Scripts
+## Run the app:
 
-Start the application `npm start`
+    npm start
 
-Start nodemon for the application `npm run dev`
+## Run the tests:
 
-Run the tests `npm test`
+    npm test
 
-## Deploying
+# API
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
+This API uses GET, POST and DELETE request to communicate. 
+
+All responses come in standard JSON.
+All requests must include a content-type of application/json and the body must be valid JSON.
+
+## Notes:
+
+The API features below aren't fully implemented, but the database is already supporting them:
+
+- Uploading images.
+- Availability of a book.
+
+## Failed Resquests and response:
+
+For all endpoints, upon receiving an unauthorized or bad request you get:
+
+**Failed Response:**
+
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{
+    "error": "Unauthorized request"
+}
+```
+
+or
+
+```json
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "error": "error message here"
+}
+```
+
+## Endpoints:
+
+## Login
+
+**You send:** Your login credentials.
+
+**You get:** An `authToken` with wich you can make further actions.
+
+- authToken => string
+
+**Request:**
+
+```json
+POST /api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "my@email.com",
+    "user_password": "myPassword"
+  }
+```
+
+**Successful Response:**
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+   "authToken": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
+```
+
+## SignUp
+
+**You send:** Your information.
+
+**You get:** An `authToken` with which you can make further actions. A user profile is created:
+
+- id => number
+- first_name => string
+- last_name => string
+- email => string
+- authToken => string
+
+**Request:**
+
+```json
+POST /api/signup HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "first name",
+    "last_name": "last name",
+    "email": "tmy@email.com",
+    "user_password": "myPassword"
+  }
+```
+
+**Successful Response:**
+
+```json
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "id": 3,
+  "first_name": "first name",
+  "last_name": "last name",
+  "email": "tmy@email.com",
+  "authToken": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
+```
+
+## Homepage
+
+**You send:** Your authToken.
+
+**You get:** A list of all books and for each book:
+
+- id => number
+- title => string
+- description => string
+- available => true
+- user_id => number
+
+**Request:**
+
+```json
+GET /api/home HTTP/1.1
+Authorization: bearer "your authToken"
+Content-Type: application/json
+```
+
+**Successful Response:**
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+      "id": 1,
+      "title": "first book",
+      "description": "book information here",
+      "available": true,
+      "user_id": 1
+  },
+  {
+      "id": 2,
+      "title": "second book",
+      "description": "book information here",
+      "available": true,
+      "user_id": 1
+  },
+  {
+      "id": 3,
+      "title": "third book",
+      "description": "book information here",
+      "available": true,
+      "user_id": 1
+  }
+]
+```
+
+## Add a new book
+
+**You send:** Your authToken. The book information.
+
+**You get:** The book profile created with:
+
+- id => number
+- title => string
+- description => string
+- image => null
+- available => true
+- user_id => number
+
+**Request:**
+
+```json
+POST /api/add-item HTTP/1.1
+Authorization: bearer "your authToken"
+Content-Type: application/json
+
+{
+    "title": "book title",
+    "description": "book information here"
+  }
+```
+
+**Successful Response:**
+
+```json
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+  {
+    "id": 1,
+    "title": "book title",
+    "description": "book information here",
+    "image": null,
+    "available": true,
+    "user_id": 1
+  }
+
+]
+```
+
+## Send a request
+
+**You send:** Your authToken. The request information.
+
+**You get:** The request profile created with:
+
+- id => number
+- subject => string
+- message => string
+- date_sent => string
+- sender_id => number
+- item_id => number
+
+**Request:**
+
+```json
+POST /api/send-request HTTP/1.1
+Authorization: bearer "your authToken"
+Content-Type: application/json
+
+{
+    "subject": "request subject here",
+    "message": "request message here",
+    "item_id": "30 (for example)"
+  }
+```
+
+**Successful Response:**
+
+```json
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+  {
+    "id": 5,
+    "subject": "request subject here",
+    "message": "request message here",
+    "date_sent": "2021-03-03T18:13:23.919Z",
+    "sender_id": 1,
+    "item_id": 30
+  }
+```
+
+## Book history
+
+**You send:** Your authToken.
+
+**You get:** A list of all books the user has added and for each book:
+
+- id => number
+- title => string
+- description => string
+
+**Request:**
+
+```json
+GET /api/item-history HTTP/1.1
+Authorization: bearer "your authToken"
+Content-Type: application/json
+
+```
+
+**Successful Response:**
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "title": "book title",
+    "description": "book information here",
+    "id": 20
+  },
+  {
+    "title": "book title",
+    "description": "book information here",
+    "id": 22
+  },
+  {
+    "title": "book title",
+    "description": "book information here",
+    "id": 23
+  }
+]
+```
+
+## Delete a book
+
+**You send:** Your authToken.
+
+**Request:**
+
+```json
+DELETE /api/item/:item_id HTTP/1.1
+Authorization: bearer "your authToken"
+Content-Type: application/json
+
+```
+
+**Successful Response:**
+
+```json
+HTTP/1.1 204 No Content
+Content-Type: application/json
+
+```
