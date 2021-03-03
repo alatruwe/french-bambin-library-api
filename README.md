@@ -18,7 +18,7 @@ It helps connect parents to find and share french learning materials.
 
 # API
 
-This API uses GET, POST and DELETE request to communicate. 
+This API uses GET, POST and DELETE requests to manage the French Bambin Library app content.
 
 All responses come in standard JSON.
 All requests must include a content-type of application/json and the body must be valid JSON.
